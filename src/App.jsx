@@ -1,35 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useState } from "react";
+import "./App.css";
 
-function App() {
-  const [count, setCount] = useState(0)
+function Form() {
+  const [formData, setFormData] = useState({
+    name: '',
+    surname: '',
+    department: '',
+    isReferance: false
+  });
+
+  const handleChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData(prevState => ({
+      ...prevState,
+      [name]: type === 'checkbox' ? checked : value
+    }));
+  };
+
+  const handleSave = async () => {
+    try {
+      const response = await fetch('http://employee-api.runasp.net/api/Employee', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      });
+
+      if (response.ok) {
+        console.log('Employee successfully saved.');
+        // İşlem başarılıysa gerekli adımları buraya ekleyebilirsiniz.
+      } else {
+        console.error('Failed to save employee.');
+        // İşlem başarısızsa kullanıcıya bir hata mesajı gösterebilirsiniz.
+      }
+    } catch (error) {
+      console.error('Error while saving employee:', error);
+    }
+  };
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <form>
+        <label>
+          İsim:
+          <input type="text" name="name" value={formData.name} onChange={handleChange}/>
+        </label>
+        <br /><br />
+        <label>
+          Soy İsim:
+          <input type="text" name="surname" value={formData.surname} onChange={handleChange}/>
+        </label>
+        <br /><br />
+        <label>
+          Departman:
+          <input type="text" name="department" value={formData.department} onChange={handleChange} />
+        </label>
+        <br /><br />
+        <label>
+          Referansı var mı?
+          <input type="checkbox" name="isReferance" checked={formData.isReferance} onChange={handleChange}/>
+        </label>
+        <br /><br />
+        <button type="button" onClick={handleSave}>Kaydet</button>
+      </form>
+    </div>
+  );
 }
 
-export default App
+function App() {
+  return (
+    <div id="container">
+      <Form />
+    </div>
+  );
+}
+
+export default App;
