@@ -1,10 +1,13 @@
 import { useState } from "react";
-import "./App.css";
 import Form from"./Form.jsx"
+
 function AddEmploye() {
   return (
-    <div id="container">
+    <div className="container ">
+      <div className="col-md-8 mb-4">
       <Form />
+      </div>
+
     </div>
   );
 }

@@ -1,18 +1,23 @@
 import React from 'react'
 
-function List(props) {
+const List=(props)=>{
     let {data} = props;
-    console.log(data,"datalar");
   return (
+    <>
     <div>
       {
       data && data.map((item, index) => (
-        <div key={index}>
-          <h3>{item.title}</h3>
+        <div key={index} className='container'>
+          <h3>{item.name}</h3>
+          <h3>{item.surname}</h3>
+          <h3>{item.department}</h3>
+          <h3>{item.isReferance}</h3>
+          <h3>{item.joiningDate}</h3>
         </div>
       ))
     }
     </div>
+    </>
   )
 }
 
