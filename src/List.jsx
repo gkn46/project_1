@@ -7,7 +7,7 @@ const List=(props)=>{
     <div className='w-400 h-400 my-8'>
       {
       data && data.map((item, index) => (
-        <div key={index} >
+        <div key={index} className='table' >
           <h3>isim: {item.name}</h3>
           <h3>soy isim: {item.surname}</h3>
           <h3>departman: {item.department}</h3>

@@ -15,6 +15,10 @@ function Form({onClose}) {
     }));
   };
   const handleSave = async () => {
+    if (!formData.name || !formData.surname || !formData.department) {
+      alert("Lütfen tüm alanları doldurunuz.");
+      return;
+    }
 
     try {
       const response = await fetch('http://employee-api.runasp.net/api/Employee', {
@@ -43,22 +47,22 @@ function Form({onClose}) {
       <form>
         <div className="input-group mb-3">
         <span className="input-group-text" id="inputGroup-sizing-default">İsim:</span>
-        <input type="text" className="form-control" name="name" required value={formData.name} onChange={handleChange}/>
+        <input type="text" className="form-control" name="name" value={formData.name} onChange={handleChange}/>
         </div>
 
         <div className="input-group mb-3">
         <span className="input-group-text" id="inputGroup-sizing-default">Soy İsim:</span>
-        <input type="text" className="form-control"  name="surname" required value={formData.surname} onChange={handleChange}/>
+        <input type="text" className="form-control"  name="surname" value={formData.surname} onChange={handleChange}/>
         </div>
 
         <div className="input-group mb-3">
         <span className="input-group-text" id="inputGroup-sizing-default">Departman:</span>
-        <input type="text" className="form-control" name="department" required value={formData.department} onChange={handleChange} />
+        <input type="text" className="form-control" name="department" value={formData.department} onChange={handleChange} />
         </div>
 
         <div className="input-group mb-3">
         <div className="input-group-text">
-          <input type="checkbox" className="form-check-input" name="isReferance" required checked={formData.isReferance} onChange={handleChange}/>
+          <input type="checkbox" className="form-check-input" name="isReferance" checked={formData.isReferance} onChange={handleChange}/>
         </div>
         <label className="form-control">Referansı var mı?</label>
         </div>
